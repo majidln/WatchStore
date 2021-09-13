@@ -9,7 +9,7 @@ const Stack = createSharedElementStackNavigator()
 const mainNavigation = () => {
   return (
       <Stack.Navigator initialRouteName="List">
-        <Stack.Screen name="List" component={ListScreen} />
+        <Stack.Screen name="List" component={ListScreen} options={{headerShown: false}} />
         <Stack.Screen
           name="Detail"
           component={DetailScreen}
