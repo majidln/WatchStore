@@ -1,21 +1,22 @@
-import { StatusBar } from 'expo-status-bar'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import AppLoading from 'expo-app-loading'
+import { useFonts } from '@expo-google-fonts/inter'
+
+import MainNavigation from './src/navigation'
 
 export default function App () {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  )
-}
+  const [fontsLoaded] = useFonts({
+    Avenir: require('./assets/fonts/AvenirLTStd-Black.otf')
+  })
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+  if (!fontsLoaded) {
+    return <AppLoading />
+  } else {
+    return (
+      <NavigationContainer>
+        <MainNavigation />
+      </NavigationContainer>
+    )
   }
-})
+}
