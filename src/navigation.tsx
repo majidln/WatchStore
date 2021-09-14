@@ -3,8 +3,14 @@ import { createSharedElementStackNavigator } from 'react-navigation-shared-eleme
 
 import ListScreen from './screens/List'
 import DetailScreen from './screens/Detail'
+import { SlideType } from './data'
 
-const Stack = createSharedElementStackNavigator()
+export type RootStackParamList = {
+  List: undefined;
+  Detail: { product: SlideType };
+};
+
+const Stack = createSharedElementStackNavigator<RootStackParamList>()
 
 const mainNavigation = () => {
   return (
@@ -15,8 +21,8 @@ const mainNavigation = () => {
           component={DetailScreen}
           options={{ headerShown: false }}
           sharedElements={(route, otherRoute, showing) => {
-            const { item } = route.params
-            return [`item.${item.id}.image`, `item.${item.id}.brand`, `item.${item.id}.price`]
+            const { product } = route.params
+            return [`item.${product.id}.image`, `item.${product.id}.brand`, `item.${product.id}.price`]
           }}
         />
       </Stack.Navigator>

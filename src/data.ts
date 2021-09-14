@@ -1,3 +1,10 @@
+export interface SlideType {
+  id: string;
+  image: number;
+  brand: string;
+  price: string;
+}
+
 export const SLIDES = [
   {
     id: 'slide1',

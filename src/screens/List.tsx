@@ -1,9 +1,13 @@
 import React, { useRef } from 'react'
 import { StatusBar, View, Text, StyleSheet, SafeAreaView, Animated, Dimensions, TouchableWithoutFeedback } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
-import { SharedElement } from 'react-navigation-shared-element';
+import { useNavigation } from '@react-navigation/native'
+import { SharedElement } from 'react-navigation-shared-element'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
+import { RootStackParamList } from './../navigation'
 import { SLIDES } from './../data'
+
+type ListScreenNavigationProp = NativeStackScreenProps<RootStackParamList, 'List'>;
 const { width, height } = Dimensions.get('screen')
 
 const SPACING = 40
@@ -11,7 +15,7 @@ const SLIDE_HEIGHT = height * (2 / 3)
 const SLIDE_WIDTH = width - SPACING
 
 const ListScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<ListScreenNavigationProp['navigation']>()
   const scrollX = useRef(new Animated.Value(0)).current
 
   return (
@@ -33,7 +37,7 @@ const ListScreen = () => {
             outputRange: [1, 1.2, 1]
           })
           return (
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('Detail', { item })}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Detail', { product: item })}>
               <View style={[
                 styles.itemWrapper,
                 index === SLIDES.length - 1 ? {} : { marginRight: SPACING / 2 }
