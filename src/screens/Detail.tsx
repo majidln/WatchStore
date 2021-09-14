@@ -13,7 +13,7 @@ const IMAGE_HEIGHT = height * (4 / 5)
 
 const DetailScreen = () => {
   const route = useRoute<DetailScreenNavigationProp['route']>()
-  console.log('route is', route)
+  console.log('route is', route.params)
 
   return (
     <View>
@@ -26,16 +26,12 @@ const DetailScreen = () => {
             backgroundColor: 'red'
           }} resizeMode="cover" />
       </SharedElement>
-      <SharedElement id={`item.${route.params.product.id}.brand`}>
-        <Text style={styles.brand}>
-          {route.params.product.brand}
-        </Text>
-      </SharedElement>
-      <SharedElement id={`item.${route.params.product.id}.price`}>
-        <Text style={styles.price}>
-          {route.params.product.price}
-        </Text>
-      </SharedElement>
+      <Text style={styles.brand}>
+        {route.params.product.brand}
+      </Text>
+      <Text style={styles.price}>
+        {route.params.product.price}
+      </Text>
     </View>
   )
 }

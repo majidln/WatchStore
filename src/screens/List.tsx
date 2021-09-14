@@ -49,16 +49,12 @@ const ListScreen = () => {
                     style={[styles.image, { transform: [{ scale }] }]} />
                 </SharedElement>
                 <View style={styles.contentWrapper}>
-                  <SharedElement id={`item.${item.id}.brand`}>
-                    <Text style={styles.brand}>
-                      {item.brand}
-                    </Text>
-                  </SharedElement>
-                  <SharedElement id={`item.${item.id}.price`}>
-                    <Text style={styles.price}>
-                      {item.price}
-                    </Text>
-                  </SharedElement>
+                  <Text style={styles.brand}>
+                    {item.brand}
+                  </Text>
+                  <Text style={styles.price}>
+                    {item.price}
+                  </Text>
                 </View>
               </View>
             </TouchableWithoutFeedback>
