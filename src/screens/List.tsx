@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { StatusBar, View, Text, Image, StyleSheet, SafeAreaView, Animated, Dimensions } from 'react-native'
+import { StatusBar, View, Text, StyleSheet, SafeAreaView, Animated, Dimensions } from 'react-native'
 
 import { SLIDES } from './../data'
 const { width, height } = Dimensions.get('screen')
@@ -7,8 +7,6 @@ const { width, height } = Dimensions.get('screen')
 const SPACING = 40
 const SLIDE_HEIGHT = height * (2 / 3)
 const SLIDE_WIDTH = width - SPACING
-const nishhar = width - ((SLIDE_WIDTH + SPACING) * 2 + SPACING)
-
 
 const ListScreen = () => {
   const scrollX = useRef(new Animated.Value(0)).current
@@ -34,7 +32,7 @@ const ListScreen = () => {
           return (
             <View style={[
               styles.itemWrapper,
-              index === SLIDES.length - 1 ? {} : { paddingRight: SPACING / 2 },
+              index === SLIDES.length - 1 ? {} : { marginRight: SPACING / 2 }
             ]}>
               <Animated.Image
                 source={item.image}
@@ -63,10 +61,10 @@ const ListScreen = () => {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#E5E5E5'
+    backgroundColor: '#fff'
   },
   list: {
-    flex: 1
+    height: SLIDE_HEIGHT
   },
   itemWrapper: {
     width: SLIDE_WIDTH,
@@ -75,7 +73,7 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   image: {
-    width: SLIDE_WIDTH - SPACING,
+    width: SLIDE_WIDTH,
     height: SLIDE_HEIGHT,
     borderRadius: 1
   },
