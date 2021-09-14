@@ -1,5 +1,7 @@
 import React, { useRef } from 'react'
-import { StatusBar, View, Text, StyleSheet, SafeAreaView, Animated, Dimensions } from 'react-native'
+import { StatusBar, View, Text, StyleSheet, SafeAreaView, Animated, Dimensions, TouchableWithoutFeedback } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
+import { SharedElement } from 'react-navigation-shared-element';
 
 import { SLIDES } from './../data'
 const { width, height } = Dimensions.get('screen')
@@ -9,6 +11,7 @@ const SLIDE_HEIGHT = height * (2 / 3)
 const SLIDE_WIDTH = width - SPACING
 
 const ListScreen = () => {
+  const navigation = useNavigation();
   const scrollX = useRef(new Animated.Value(0)).current
 
   return (
@@ -30,23 +33,31 @@ const ListScreen = () => {
             outputRange: [1, 1.2, 1]
           })
           return (
-            <View style={[
-              styles.itemWrapper,
-              index === SLIDES.length - 1 ? {} : { marginRight: SPACING / 2 }
-            ]}>
-              <Animated.Image
-                source={item.image}
-                resizeMode="cover"
-                style={[styles.image, { transform: [{ scale }] }]} />
-              <View style={styles.contentWrapper}>
-                <Text style={styles.brand}>
-                  {item.brand}
-                </Text>
-                <Text style={styles.price}>
-                  {item.price}
-                </Text>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Detail', { item })}>
+              <View style={[
+                styles.itemWrapper,
+                index === SLIDES.length - 1 ? {} : { marginRight: SPACING / 2 }
+              ]}>
+                <SharedElement id={`item.${item.id}.image`}>
+                  <Animated.Image
+                    source={item.image}
+                    resizeMode="cover"
+                    style={[styles.image, { transform: [{ scale }] }]} />
+                </SharedElement>
+                <View style={styles.contentWrapper}>
+                  <SharedElement id={`item.${item.id}.brand`}>
+                    <Text style={styles.brand}>
+                      {item.brand}
+                    </Text>
+                  </SharedElement>
+                  <SharedElement id={`item.${item.id}.price`}>
+                    <Text style={styles.price}>
+                      {item.price}
+                    </Text>
+                  </SharedElement>
+                </View>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           )
         }}
         onScroll={Animated.event(
@@ -85,12 +96,14 @@ const styles = StyleSheet.create({
   brand: {
     color: '#fff',
     fontSize: 24,
-    fontFamily: 'Avenir'
+    fontFamily: 'Avenir',
+    flex: 1
   },
   price: {
     color: '#fff',
     fontSize: 20,
-    fontFamily: 'Avenir'
+    fontFamily: 'Avenir',
+    flex: 1
   }
 })
 
