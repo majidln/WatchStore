@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   list: {
+    paddingTop: 10,
     height: SLIDE_HEIGHT
   },
   itemOuterWrapper: {

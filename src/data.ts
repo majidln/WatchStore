@@ -7,7 +7,7 @@ export interface SlideType {
 
 export const SLIDES = [
   {
-    id: 'key-left',
+    id: 'key-left'
   },
   {
     id: 'slide1',
