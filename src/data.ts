@@ -24,7 +24,7 @@ export const SLIDES = [
     brand: 'Avenir',
     price: '$263'
   }
-]
+];
 
 export const PRODUCTS = [
   {
@@ -41,4 +41,4 @@ export const PRODUCTS = [
     price: '$249',
     size: 'Black, size L'
   }
-]
+];

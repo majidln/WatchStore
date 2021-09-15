@@ -1,22 +1,22 @@
-import React, { useRef } from 'react'
-import { StatusBar, View, Text, StyleSheet, SafeAreaView, Animated, Dimensions, TouchableWithoutFeedback } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import { SharedElement } from 'react-navigation-shared-element'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import React, { useRef } from 'react';
+import { StatusBar, View, Text, StyleSheet, SafeAreaView, Animated, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { SharedElement } from 'react-navigation-shared-element';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { RootStackParamList } from './../navigation'
-import { SLIDES } from './../data'
+import { RootStackParamList } from './../navigation';
+import { SLIDES } from './../data';
 
 type ListScreenNavigationProp = NativeStackScreenProps<RootStackParamList, 'List'>;
-const { width, height } = Dimensions.get('screen')
+const { width, height } = Dimensions.get('screen');
 
-const SPACING = 40
-const SLIDE_HEIGHT = height * (2 / 3)
-const SLIDE_WIDTH = width - SPACING
+const SPACING = 40;
+const SLIDE_HEIGHT = height * (2 / 3);
+const SLIDE_WIDTH = width - SPACING;
 
 const ListScreen = () => {
-  const navigation = useNavigation<ListScreenNavigationProp['navigation']>()
-  const scrollX = useRef(new Animated.Value(0)).current
+  const navigation = useNavigation<ListScreenNavigationProp['navigation']>();
+  const scrollX = useRef(new Animated.Value(0)).current;
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -31,11 +31,11 @@ const ListScreen = () => {
         snapToAlignment={'start'}
         pagingEnabled
         renderItem={({ item, index }) => {
-          const inputRange = [(index - 1), index, (index + 1)].map(item => item * SLIDE_WIDTH)
+          const inputRange = [(index - 1), index, (index + 1)].map(item => item * SLIDE_WIDTH);
           const scale = scrollX.interpolate({
             inputRange,
             outputRange: [1, 1.2, 1]
-          })
+          });
           return (
             <TouchableWithoutFeedback onPress={() => navigation.navigate('Detail', { product: item })}>
               <View style={[
@@ -58,7 +58,7 @@ const ListScreen = () => {
                 </View>
               </View>
             </TouchableWithoutFeedback>
-          )
+          );
         }}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { x: scrollX } } }],
@@ -66,8 +66,8 @@ const ListScreen = () => {
         )}
       />
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -105,6 +105,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir',
     flex: 1
   }
-})
+});
 
-export default ListScreen
+export default ListScreen;

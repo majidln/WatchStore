@@ -1,19 +1,19 @@
-import React from 'react'
-import { View, Text, Image, Dimensions, StyleSheet } from 'react-native'
-import { SharedElement } from 'react-navigation-shared-element'
-import { useRoute } from '@react-navigation/native'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import React from 'react';
+import { View, Text, Image, Dimensions, StyleSheet } from 'react-native';
+import { SharedElement } from 'react-navigation-shared-element';
+import { useRoute } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { RootStackParamList } from './../navigation'
+import { RootStackParamList } from './../navigation';
 
 type DetailScreenNavigationProp = NativeStackScreenProps<RootStackParamList, 'Detail'>;
 
-const { width, height } = Dimensions.get('screen')
-const IMAGE_HEIGHT = height * (4 / 5)
+const { width, height } = Dimensions.get('screen');
+const IMAGE_HEIGHT = height * (4 / 5);
 
 const DetailScreen = () => {
-  const route = useRoute<DetailScreenNavigationProp['route']>()
-  console.log('route is', route.params)
+  const route = useRoute<DetailScreenNavigationProp['route']>();
+  console.log('route is', route.params);
 
   return (
     <View>
@@ -33,8 +33,8 @@ const DetailScreen = () => {
         {route.params.product.price}
       </Text>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   brand: {
@@ -47,6 +47,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir',
     textAlign: 'left'
   }
-})
+});
 
-export default DetailScreen
+export default DetailScreen;
