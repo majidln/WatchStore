@@ -7,6 +7,9 @@ export interface SlideType {
 
 export const SLIDES = [
   {
+    id: 'key-left',
+  },
+  {
     id: 'slide1',
     image: require('./../assets/slide1.png'),
     brand: 'CLESO',
