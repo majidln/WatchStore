@@ -1,15 +1,16 @@
 import React from 'react';
-import { View, Text, Image, Dimensions, StyleSheet, ScrollView } from 'react-native';
+import { View, Image, Dimensions, StyleSheet, ScrollView } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
 import { useRoute } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import * as Animatable from 'react-native-animatable';
 
 import { RootStackParamList } from './../navigation';
 
 type DetailScreenNavigationProp = NativeStackScreenProps<RootStackParamList, 'Detail'>;
 
 const { width, height } = Dimensions.get('screen');
-const IMAGE_HEIGHT = height * (4 / 5);
+const IMAGE_HEIGHT = height * 0.6;
 
 const DetailScreen = () => {
   const route = useRoute<DetailScreenNavigationProp['route']>();
@@ -26,23 +27,27 @@ const DetailScreen = () => {
             backgroundColor: 'red'
           }} resizeMode="cover" />
       </SharedElement>
-      <Text style={styles.brand}>
+      <View style={styles.contentWrapper}>
+      <Animatable.Text animation="slideInUp" style={styles.brand}>
         {route.params.product.brand}
-      </Text>
-      <Text style={styles.price}>
+      </Animatable.Text>
+      <Animatable.Text animation="slideInUp" style={styles.price}>
         {route.params.product.price}
-      </Text>
-      <Text style={styles.desc}>
+      </Animatable.Text>
+      <Animatable.Text animation="slideInUp" style={styles.desc}>
         {route.params.product.desc}
-      </Text>
+      </Animatable.Text>
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   scroll: {
-    flex: 1,
-    paddingBottom: 20
+    flex: 1
+  },
+  contentWrapper: {
+    padding: 20
   },
   brand: {
     fontSize: 24,
