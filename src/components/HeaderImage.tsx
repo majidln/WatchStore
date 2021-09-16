@@ -1,22 +1,27 @@
 import React, { FC, ReactElement } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
-interface Props {
+interface Props extends TouchableOpacityProps {
   source: number
 }
 
-const HeaderImage: FC<Props> = ({ source }): ReactElement => {
+const HeaderImage: FC<Props> = ({ source, style, ...rest }): ReactElement => {
   return (
-    <Image source={source} style={styles.image} />
+    <TouchableOpacity style={[styles.wrapper, style]} {...rest}>
+      <Image source={source} style={styles.image} />
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    width: 35,
+    height: 35
+  },
   image: {
     width: 35,
     height: 35
   }
 });
 
-HeaderImage.displayName = 'HeaderImage';
 export default HeaderImage;
