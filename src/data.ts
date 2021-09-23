@@ -6,6 +6,14 @@ export interface SlideType {
   desc: string;
 }
 
+export interface ProductType {
+  id: string;
+  image: number;
+  brand: string;
+  price: string;
+  size: string;
+}
+
 export const SLIDES = [
   {
     id: 'key-left'
@@ -36,14 +44,14 @@ export const SLIDES = [
 export const PRODUCTS = [
   {
     id: 'product1',
-    image: require('./../assets/product1.png'),
+    image: require('./../assets/product2.png'),
     brand: 'ORMOUS',
     price: '$249',
     size: 'White, size L'
   },
   {
-    id: 'product1',
-    image: require('./../assets/product1.png'),
+    id: 'product2',
+    image: require('./../assets/product2.png'),
     brand: 'HISAKO',
     price: '$249',
     size: 'Black, size L'

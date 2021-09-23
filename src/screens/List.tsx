@@ -5,7 +5,8 @@ import { SharedElement } from 'react-navigation-shared-element';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from './../navigation';
-import { SLIDES } from './../data';
+import { PRODUCTS, SLIDES } from './../data';
+import ProductItem from './../components/ProductItem';
 
 type ListScreenNavigationProp = NativeStackScreenProps<RootStackParamList, 'List'>;
 const { width, height } = Dimensions.get('screen');
@@ -21,54 +22,61 @@ const ListScreen = () => {
   return (
     <SafeAreaView style={styles.wrapper}>
       <StatusBar backgroundColor="#E5E5E5" barStyle="dark-content"></StatusBar>
-      <Animated.FlatList
-        data={SLIDES}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={item => item.id}
-        style={styles.list}
-        snapToInterval={SLIDE_WIDTH}
-        pagingEnabled
-        renderItem={({ item, index }) => {
-          if (item.id === 'key-left') {
-            return <View style={{ width: SPACING }}></View>;
-          }
-          const inputRange = [(index - 2), index - 1, (index)].map(item => item * SLIDE_WIDTH);
-          const scale = scrollX.interpolate({
-            inputRange,
-            outputRange: [1, 1.3, 1]
-          });
-          return (
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('Detail', { product: item })}>
-              <View style={styles.itemOuterWrapper}>
-                <View style={[
-                  styles.itemWrapper
-                  // index === SLIDES.length - 1 ? {} : { marginRight: SPACING / 2 }
-                ]}>
-                  <SharedElement id={`item.${item.id}.image`}>
-                    <Animated.Image
-                      source={item.image}
-                      resizeMode="cover"
-                      style={[styles.image, { transform: [{ scale }] }]} />
-                  </SharedElement>
-                  <View style={styles.contentWrapper}>
-                    <Text style={styles.brand}>
-                      {item.brand}
-                    </Text>
-                    <Text style={styles.price}>
-                      {item.price}
-                    </Text>
+      <View style={styles.listWrapper}>
+        <Animated.FlatList
+          data={SLIDES}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={item => item.id}
+          snapToInterval={SLIDE_WIDTH}
+          pagingEnabled
+          renderItem={({ item, index }) => {
+            if (item.id === 'key-left') {
+              return <View style={{ width: SPACING }}></View>;
+            }
+            const inputRange = [(index - 2), index - 1, (index)].map(item => item * SLIDE_WIDTH);
+            const scale = scrollX.interpolate({
+              inputRange,
+              outputRange: [1, 1.3, 1]
+            });
+            return (
+              <TouchableWithoutFeedback onPress={() => navigation.navigate('Detail', { product: item })}>
+                <View style={styles.itemOuterWrapper}>
+                  <View style={[
+                    styles.itemWrapper
+                    // index === SLIDES.length - 1 ? {} : { marginRight: SPACING / 2 }
+                  ]}>
+                    <SharedElement id={`item.${item.id}.image`}>
+                      <Animated.Image
+                        source={item.image}
+                        resizeMode="cover"
+                        style={[styles.image, { transform: [{ scale }] }]} />
+                    </SharedElement>
+                    <View style={styles.contentWrapper}>
+                      <Text style={styles.brand}>
+                        {item.brand}
+                      </Text>
+                      <Text style={styles.price}>
+                        {item.price}
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            </TouchableWithoutFeedback>
-          );
-        }}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          { useNativeDriver: false }
-        )}
-      />
+              </TouchableWithoutFeedback>
+            );
+          }}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+            { useNativeDriver: false }
+          )}
+        />
+      </View>
+      {PRODUCTS.map((product) => {
+        return <ProductItem
+          key={product.id}
+          product={product}
+        />;
+      })}
     </SafeAreaView>
   );
 };
@@ -78,10 +86,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff'
   },
-  list: {
-    paddingTop: 10,
+  listWrapper: {
     height: SLIDE_HEIGHT,
-    marginTop: 10
+    marginTop: 20
   },
   itemOuterWrapper: {
     width: SLIDE_WIDTH,
