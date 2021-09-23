@@ -20,14 +20,26 @@ const mainNavigation = () => {
       headerStyle: {
         elevation: 0,
         shadowOpacity: 0,
-        height: 80
+        height: 80,
+        paddingHorizontal: 200
       },
-      headerTitleAlign: 'center'
+      headerTitleStyle: {
+        fontFamily: 'Avenir'
+      },
+      headerLeftContainerStyle: {
+        paddingHorizontal: 20
+      },
+      headerRightContainerStyle: {
+        paddingHorizontal: 20
+      },
+      headerTitleAlign: 'center',
+      detachPreviousScreen: false
     }}>
       <Stack.Screen
         name="List"
         component={ListScreen}
         options={{
+          title: 'Watches',
           headerLeft: () => <HeaderImage source={require('./../assets/icons/menu.png')} />,
           headerRight: () => <HeaderImage source={require('./../assets/icons/search.png')} />
         }} />

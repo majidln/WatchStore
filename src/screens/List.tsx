@@ -81,12 +81,13 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingTop: 10,
-    height: SLIDE_HEIGHT
+    height: SLIDE_HEIGHT,
+    marginTop: 10
   },
   itemOuterWrapper: {
     width: SLIDE_WIDTH,
     height: SLIDE_HEIGHT,
-    paddingHorizontal: SPACING / 2,
+    paddingHorizontal: SPACING / 2
   },
   itemWrapper: {
     width: SLIDE_WIDTH - SPACING,
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: SLIDE_WIDTH - SPACING,
-    height: SLIDE_HEIGHT,
+    height: SLIDE_HEIGHT
   },
   contentWrapper: {
     position: 'absolute',

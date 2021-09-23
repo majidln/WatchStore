@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Dimensions, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, Image, Dimensions, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
 import { AntDesign } from '@expo/vector-icons';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -13,7 +13,22 @@ import Button from './../components/Button';
 type DetailScreenNavigationProp = NativeStackScreenProps<RootStackParamList, 'Detail'>;
 
 const { width, height } = Dimensions.get('screen');
-const IMAGE_HEIGHT = height * 0.9;
+const IMAGE_HEIGHT = height * 0.7;
+
+const zoomIn = {
+  0: {
+    opacity: 0,
+    marginTop: 20
+  },
+  0.5: {
+    opacity: 0.5,
+    marginTop: 10
+  },
+  1: {
+    opacity: 1,
+    marginTop: 0
+  }
+};
 
 const DetailScreen = () => {
   const navigation = useNavigation<DetailScreenNavigationProp['navigation']>();
@@ -24,33 +39,32 @@ const DetailScreen = () => {
       <Animatable.View animation={'slideInLeft'} style={styles.backBtn}>
         <HeaderImage onPress={() => navigation.goBack()} source={require('./../../assets/icons/back.png')} />
       </Animatable.View>
-      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
-        <SharedElement id={`item.${route.params.product.id}.image`}>
+      <SharedElement id={`item.${route.params.product.id}.image`}>
           <Image
             source={route.params.product.image}
             style={{
               width: width,
-              height: IMAGE_HEIGHT,
-              backgroundColor: 'red'
+              height: IMAGE_HEIGHT
             }} resizeMode="cover" />
         </SharedElement>
-        <View style={styles.contentWrapper}>
-          <Animatable.Text animation="slideInUp" style={styles.brand}>
+      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
+        <Animatable.View easing='linear' animation={zoomIn} delay={500} style={styles.contentWrapper}>
+          <Text style={styles.brand}>
             {route.params.product.brand}
-          </Animatable.Text>
-          <Animatable.Text animation="slideInUp" style={styles.price}>
+          </Text>
+          <Text style={styles.price}>
             {route.params.product.price}
-          </Animatable.Text>
-          <Animatable.Text animation="slideInUp" style={styles.desc}>
+          </Text>
+          <Text style={styles.desc}>
             {route.params.product.desc}
-          </Animatable.Text>
-          <Animatable.View animation='slideInUp' style={styles.actionWrapper}>
+          </Text>
+          <View style={styles.actionWrapper}>
             <Button label="BUY NOW" />
             <TouchableOpacity style={styles.iconWrapper}>
               <AntDesign name="hearto" size={24} color="black" />
             </TouchableOpacity>
-          </Animatable.View>
-        </View>
+          </View>
+        </Animatable.View>
       </ScrollView>
     </View>
   );
@@ -66,7 +80,7 @@ const styles = StyleSheet.create({
   backBtn: {
     position: 'absolute',
     left: 10,
-    top: 10,
+    top: 100,
     zIndex: 1
   },
   contentWrapper: {
