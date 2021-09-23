@@ -11,7 +11,7 @@ type ListScreenNavigationProp = NativeStackScreenProps<RootStackParamList, 'List
 const { width, height } = Dimensions.get('screen');
 
 const SPACING = 20;
-const SLIDE_HEIGHT = height * 0.6;
+const SLIDE_HEIGHT = height * 0.5;
 const SLIDE_WIDTH = width - (2 * SPACING);
 
 const ListScreen = () => {
@@ -28,7 +28,6 @@ const ListScreen = () => {
         keyExtractor={item => item.id}
         style={styles.list}
         snapToInterval={SLIDE_WIDTH}
-        snapToAlignment={'start'}
         pagingEnabled
         renderItem={({ item, index }) => {
           if (item.id === 'key-left') {

@@ -20,8 +20,7 @@ const mainNavigation = () => {
       headerStyle: {
         elevation: 0,
         shadowOpacity: 0,
-        height: 80,
-        paddingHorizontal: 200
+        height: 80
       },
       headerTitleStyle: {
         fontFamily: 'Avenir'

@@ -1,5 +1,5 @@
-import React from 'react';
-import { SafeAreaView, View, Image, Dimensions, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Image, Dimensions, StyleSheet, ScrollView, TouchableOpacity, Text, Animated } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
 import { AntDesign } from '@expo/vector-icons';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -31,24 +31,38 @@ const zoomIn = {
 };
 
 const DetailScreen = () => {
+  const scrollY = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation<DetailScreenNavigationProp['navigation']>();
   const route = useRoute<DetailScreenNavigationProp['route']>();
 
+  const imageScale = scrollY.interpolate({
+    inputRange: [-0.0002, 0, 40, 40 + 0.00002],
+    outputRange: [1, 1, 0.9, 0.9]
+  });
+
   return (
     <View style={styles.wrapper}>
-      <Animatable.View animation={'slideInLeft'} style={styles.backBtn}>
-        <HeaderImage onPress={() => navigation.goBack()} source={require('./../../assets/icons/back.png')} />
-      </Animatable.View>
-      <SharedElement id={`item.${route.params.product.id}.image`}>
-          <Image
+      <Animated.ScrollView
+        style={styles.scroll}
+        showsVerticalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
+      >
+        <Animatable.View animation={'slideInLeft'} delay={200} style={styles.backBtn}>
+          <HeaderImage onPress={() => navigation.goBack()} source={require('./../../assets/icons/back.png')} />
+        </Animatable.View>
+        <SharedElement id={`item.${route.params.product.id}.image`}>
+          <Animated.Image
             source={route.params.product.image}
             style={{
               width: width,
-              height: IMAGE_HEIGHT
+              height: IMAGE_HEIGHT,
+              transform: [{ scaleY: imageScale }]
             }} resizeMode="cover" />
         </SharedElement>
-      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
-        <Animatable.View easing='linear' animation={zoomIn} delay={500} style={styles.contentWrapper}>
+        <Animatable.View easing='linear' animation={zoomIn} delay={350} style={styles.contentWrapper}>
           <Text style={styles.brand}>
             {route.params.product.brand}
           </Text>
@@ -65,14 +79,15 @@ const DetailScreen = () => {
             </TouchableOpacity>
           </View>
         </Animatable.View>
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#fff'
   },
   scroll: {
     flex: 1
@@ -80,7 +95,7 @@ const styles = StyleSheet.create({
   backBtn: {
     position: 'absolute',
     left: 10,
-    top: 100,
+    top: 50,
     zIndex: 1
   },
   contentWrapper: {
